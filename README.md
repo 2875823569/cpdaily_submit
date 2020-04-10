@@ -11,5 +11,5 @@
 
 - 项目基于 https://github.com/ZimoLoveShuang/auto-submit 开发优化
 
-- 项目仅供参考
+- 代码仅供参考,感谢网上相关资源
 
