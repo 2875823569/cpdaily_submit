@@ -168,7 +168,7 @@ def submit():
             'Connection': 'Keep-Alive',
             'Accept-Encoding': 'gzip'
         }
-
+        # 地址根据学校要求填写即可
         params = {"formWid": formWid, "address": "定位失败",
                   "collectWid": collectWid, "schoolTaskWid": schoolTaskWid,
                   "form": form
