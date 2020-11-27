@@ -16,7 +16,7 @@ from Crypto.Util.Padding import pad
 import re
 
 
-loginUrl = 'http://authserver.ahdy.edu.cn/authserver/login?service=https%3A%2F%2Fahdy.cpdaily.com%2Fportal%2Flogin' # 学校登陆网址
+loginUrl = 'http://authserver.xxx.edu.cn/authserver/login?service=https%3A%2F%2Fxxx.cpdaily.com%2Fportal%2Flogin' # 学校登陆网址
 xh = '********'  #  学号
 pwd = '********'  #  密码
 
@@ -75,7 +75,7 @@ def submit():
         password = encryptAES(pwd, pwdDefaultEncryptSalt)  # 加密密码
         # TODO
         # 验证码 配合OCR识别
-        # url = 'http://authserver.ahdy.edu.cn/authserver/needCaptcha.html'
+        # url = 'http://authserver.xxx.edu.cn/authserver/needCaptcha.html'
         # params1 = {
         #     'username': xh,
         #     'pwdEncrypt2': 'pwdEncryptSalt',
@@ -99,7 +99,7 @@ def submit():
         cookies = server.cookies
 
         # 携带cookie查询最新待提交表单
-        queryCollectWidUrl = 'https://ahdy.cpdaily.com/wec-counselor-collector-apps/stu/collector/queryCollectorProcessingList'
+        queryCollectWidUrl = 'https://xxx.cpdaily.com/wec-counselor-collector-apps/stu/collector/queryCollectorProcessingList'
         headers = {
             'Accept': 'application/json, text/plain, */*',
             'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; OPPO R11 Plus Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 yiban/8.1.11 cpdaily/8.1.11 wisedu/8.1.11',
@@ -120,28 +120,28 @@ def submit():
             print("当前暂无问卷提交任务(是否已完成)"+res.text)
             if flag > 3:
                 mail("今日重试次数过多,请手动提交!")
-                print(server.get("https://ahdy.cpdaily.com/portal/logout", cookies=cookies))  # 退出登录
+                print(server.get("https://xxx.cpdaily.com/portal/logout", cookies=cookies))  # 退出登录
                 time.sleep(24 * 60 * 60)
                 continue
                 # return "今日重试次数过多,请手动提交!"
-            server.get("https://ahdy.cpdaily.com/portal/logout", cookies=cookies) # 退出登录
+            server.get("https://xxx.cpdaily.com/portal/logout", cookies=cookies) # 退出登录
             time.sleep(1*60*60)
             continue
         row = res.json()['datas']['rows'][0]
         if row['isHandled'] == 1:
             print("今日已经填写:" + res.text)
             mail("今日已经填写")
-            server.get("https://ahdy.cpdaily.com/portal/logout", cookies=cookies)
+            server.get("https://xxx.cpdaily.com/portal/logout", cookies=cookies)
             time.sleep(24 * 60 * 60)
             continue
         collectWid = res.json()['datas']['rows'][0]['wid']
         formWid = res.json()['datas']['rows'][0]['formWid']
 
-        res = requests.post(url='https://ahdy.cpdaily.com/wec-counselor-collector-apps/stu/collector/detailCollector',
+        res = requests.post(url='https://xxx.cpdaily.com/wec-counselor-collector-apps/stu/collector/detailCollector',
                             headers=headers, cookies=cookies, data=json.dumps({"collectorWid": collectWid}))
         schoolTaskWid = res.json()['datas']['collector']['schoolTaskWid'] # 这里也可抓包获取
 
-        res = requests.post(url='https://ahdy.cpdaily.com/wec-counselor-collector-apps/stu/collector/getFormFields',
+        res = requests.post(url='https://xxx.cpdaily.com/wec-counselor-collector-apps/stu/collector/getFormFields',
                             headers=headers, cookies=cookies, data=json.dumps(
                 {"pageSize": 30, "pageNumber": 1, "formWid": formWid, "collectorWid": collectWid})) # 当前我们需要问卷选项有21个，pageSize可适当调整
 
@@ -162,7 +162,7 @@ def submit():
             'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.4; OPPO R11 Plus Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Safari/537.36 okhttp/3.12.4',
             'CpdailyStandAlone': '0',
             'extension': '1',
-            'Cpdaily-Extension': '7vGWlfMTok9XC2Sz+EGOWdIzrLu9t82o6JZIBNMmvdF8BryaXycAggrfdVS1 osAYMwJ0RR5GSkMKyjqumYvvI7JHcC1rSHQ4olTVG1rkP5sYaDOyq+He2xUh tdgR9Ydcdmqf/zHivo3pdgqtDCpx9CAO9meEZDptptwteeuwL553IJWPH5Hr g3n1rX7j2jSlbrpkhwDCcnXrNxkbLIeYN0fOxHZT6SS4V2k4IS/cwgTUR0Xt lXD6Yti/Wbkt+bY9gacP3Oue9ZQ=',
+            'Cpdaily-Extension': '',
             'Content-Type': 'application/json; charset=utf-8',
             'Host': 'ahdy.cpdaily.com',
             'Connection': 'Keep-Alive',
@@ -174,10 +174,10 @@ def submit():
                   "form": form
         }
 
-        r = server.post("http://ahdy.cpdaily.com/wec-counselor-collector-apps/stu/collector/submitForm",
+        r = server.post("http://xxx.cpdaily.com/wec-counselor-collector-apps/stu/collector/submitForm",
                         headers=headers, cookies=cookies, data=json.dumps(params))
         msg = r.json()['message']
-        server.get("https://ahdy.cpdaily.com/portal/logout",cookies=cookies)
+        server.get("https://xxx.cpdaily.com/portal/logout",cookies=cookies)
 
         if msg == 'SUCCESS':
             print('今日提交成功！24小时后，脚本将再次自动提交')
