@@ -5,11 +5,11 @@
 
 - 系统安装Python环境及其相关模块,命令行执行 `python cpdaily_submit.py` 即可
 
-- 推荐使用linux nohup命令,可在后台常驻执行`nohup python -u cpdaily_submit.py > xxx.log &`
+- 推荐使用linux nohup命令,可在后台常驻执行`nohup python -u cpdaily_submit.py >> xxx.log &`
 
 - 邮件发信根据你所用邮箱，网上搜索其相关配置即可
 
 - 项目基于 https://github.com/ZimoLoveShuang/auto-submit 开发优化
 
-- 代码未经整理,仅供学习交流,感谢网上相关资源
+- 代码未经整理,仅供参考
 
