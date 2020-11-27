@@ -164,7 +164,7 @@ def submit():
             'extension': '1',
             'Cpdaily-Extension': '',
             'Content-Type': 'application/json; charset=utf-8',
-            'Host': 'ahdy.cpdaily.com',
+            'Host': 'xxx.cpdaily.com',
             'Connection': 'Keep-Alive',
             'Accept-Encoding': 'gzip'
         }
